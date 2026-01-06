@@ -18,7 +18,7 @@ const App = () => {
       });
   }, [apiUrl]);
 
-  // Memoize fetched posts
+  // Cache fetched posts
   const cachedPosts = useMemo(() => posts, [posts]);
 
   return (
@@ -29,7 +29,10 @@ const App = () => {
         <p>Loading...</p>
       ) : (
         cachedPosts.map((post) => (
-          <h4 key={post.id}>{post.title}</h4>
+          <div key={post.id}>
+            <h4>{post.title}</h4>
+            <p>{post.body}</p>
+          </div>
         ))
       )}
     </div>
@@ -37,3 +40,4 @@ const App = () => {
 };
 
 export default App;
+
