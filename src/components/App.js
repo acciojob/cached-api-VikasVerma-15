@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import "./../styles/App.css";
 
 const App = () => {
-  const [data, setData] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const apiUrl = "https://jsonplaceholder.typicode.com/posts";
@@ -12,14 +12,14 @@ const App = () => {
 
     fetch(apiUrl)
       .then((res) => res.json())
-      .then((result) => {
-        setData(result);
+      .then((data) => {
+        setPosts(data);
         setLoading(false);
       });
   }, [apiUrl]);
 
-  // cache API response
-  const cachedData = useMemo(() => data, [data]);
+  // Memoize fetched posts
+  const cachedPosts = useMemo(() => posts, [posts]);
 
   return (
     <div>
@@ -28,7 +28,9 @@ const App = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <p>{cachedData.length} items fetched</p>
+        cachedPosts.map((post) => (
+          <h4 key={post.id}>{post.title}</h4>
+        ))
       )}
     </div>
   );
